@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 
 function Login({ setUser }) {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -14,7 +14,7 @@ function Login({ setUser }) {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', form);
+      const res = await api.post('/auth/login', form);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data));
       setUser(res.data);
@@ -44,25 +44,11 @@ function Login({ setUser }) {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Email Address</label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-              required
-            />
+            <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="Enter your email" required />
           </div>
           <div className="form-group">
             <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              placeholder="Enter your password"
-              required
-            />
+            <input type="password" name="password" value={form.password} onChange={handleChange} placeholder="Enter your password" required />
           </div>
           <button type="submit" className="btn" style={{ width: '100%', marginTop: '0.5rem' }} disabled={loading}>
             {loading ? 'Signing in...' : 'Sign In'}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 
 function Register({ setUser }) {
   const [form, setForm] = useState({ name: '', email: '', password: '', confirmPassword: '' });
@@ -22,7 +22,7 @@ function Register({ setUser }) {
     }
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', {
+      const res = await api.post('/auth/register', {
         name: form.name,
         email: form.email,
         password: form.password,
@@ -56,47 +56,19 @@ function Register({ setUser }) {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Full Name</label>
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="Enter your full name"
-              required
-            />
+            <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Enter your full name" required />
           </div>
           <div className="form-group">
             <label>Email Address</label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-              required
-            />
+            <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="Enter your email" required />
           </div>
           <div className="form-group">
             <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              placeholder="At least 6 characters"
-              required
-            />
+            <input type="password" name="password" value={form.password} onChange={handleChange} placeholder="At least 6 characters" required />
           </div>
           <div className="form-group">
             <label>Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={form.confirmPassword}
-              onChange={handleChange}
-              placeholder="Repeat your password"
-              required
-            />
+            <input type="password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} placeholder="Repeat your password" required />
           </div>
           <button type="submit" className="btn" style={{ width: '100%', marginTop: '0.5rem' }} disabled={loading}>
             {loading ? 'Creating account...' : 'Create Account'}
